@@ -75,8 +75,7 @@ public class TermuxShellUtils {
 
         List<String> result = new ArrayList<>();
         if (interpreter != null) result.add(interpreter);
-        result.add(executable);
-		
+        
 		if ( TermuxShellEnvironment.ProotMod) {
 			String PACKAGE_NAME_PATH = TermuxShellEnvironment.PACKAGE_NAME_PATH;
 			//以proot方式启动
@@ -88,6 +87,8 @@ public class TermuxShellUtils {
 
 			result.add("--bind=" + PACKAGE_NAME_PATH + "/cache" + ":/linkerconfig");
 		}
+		
+		result.add(executable);
 		
         if (arguments != null) Collections.addAll(result, arguments);
         return result.toArray(new String[0]);
