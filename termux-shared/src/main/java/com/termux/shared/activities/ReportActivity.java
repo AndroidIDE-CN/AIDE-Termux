@@ -427,11 +427,13 @@ public class ReportActivity extends AppCompatActivity {
      *                      asynchronously in the background and control is returned to the caller thread.
      * @return Returns the {@code error} if deleting was not successful, otherwise {@code null}.
      */
-    public static Error deleteReportInfoFilesOlderThanXDays(@NonNull final Context context, int days, final boolean isSynchronous) {
+    public static Error deleteReportInfoFilesOlderThanXDays(@NonNull final Context context, final int days, final boolean isSynchronous) {
         if (isSynchronous) {
             return deleteReportInfoFilesOlderThanXDaysInner(context, days);
         } else {
-            new Thread() { public void run() {
+            new Thread() { 
+			@Override
+			public void run() {
                 Error error = deleteReportInfoFilesOlderThanXDaysInner(context, days);
                 if (error != null) {
                     Logger.logErrorExtended(LOG_TAG, error.toString());

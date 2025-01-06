@@ -46,7 +46,7 @@ public class EventHandler {
 
 	private static void handlerGradleCmdLine(TermuxActivity termuxActivity, final Intent intent) {
 		
-		TerminalView terminalView = termuxActivity.getTerminalView();
+		final TerminalView terminalView = termuxActivity.getTerminalView();
 		//接收传入的命令并异步运行
 		terminalView.postDelayed(new Runnable() {
 			@Override
