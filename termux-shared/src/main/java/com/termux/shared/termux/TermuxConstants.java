@@ -343,8 +343,47 @@ public final class TermuxConstants {
 
     /** Termux app name */
     public static final String TERMUX_APP_NAME = "Termux"; // Default: "Termux"
+
     /** Termux package name */
-    public static final String TERMUX_PACKAGE_NAME = "com.termux"; // Default: "com.termux"
+    public static final String TERMUX_PACKAGE_NAME_TERMUX = "com.termux";
+    public static final String TERMUX_PACKAGE_NAME = getPackageName();
+    
+    private static String getPackageName(){
+        try { 
+            Class<?> activityThreadClass = Class.forName("android.app.ActivityThread"); 
+            java.lang.reflect.Method currentPackage = activityThreadClass.getMethod("currentPackageName"); 
+            return (String) currentPackage.invoke(null); 
+        } 
+        catch (Exception e) { 
+            e.printStackTrace();
+        }
+        String processName = getProcessName();
+        if ( processName.length() > 1 ){
+            int lastIndexOf = processName.indexOf(':');
+            if ( lastIndexOf > 0 ){
+                return processName.substring(0, lastIndexOf);
+            }
+        }
+        return processName;
+    }
+    
+    /**
+     * @return 当前进程[进程名]
+     */
+    public static String getProcessName(){
+        if ( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R ){
+            return android.app.Application.getProcessName();
+        }
+        try{
+            Class<?> activityThreadClass = Class.forName("android.app.ActivityThread"); 
+            java.lang.reflect.Method currentPackage = activityThreadClass.getMethod("getProcessName"); 
+            return (String) currentPackage.invoke(null);
+        }
+        catch (Throwable e){
+            return ":";
+        }
+    }
+    
     /** Termux GitHub repo name */
     public static final String TERMUX_GITHUB_REPO_NAME = "termux-app"; // Default: "termux-app"
     /** Termux GitHub repo url */
@@ -684,10 +723,6 @@ public final class TermuxConstants {
     public static final File TERMUX_APPS_DIR = new File(TERMUX_APPS_DIR_PATH);
 
 
-    /** Termux app $PREFIX directory path ignored sub file paths to consider it empty */
-    public static final List<String> TERMUX_PREFIX_DIR_IGNORED_SUB_FILES_PATHS_TO_CONSIDER_AS_EMPTY = Arrays.asList(
-        TermuxConstants.TERMUX_TMP_PREFIX_DIR_PATH, TermuxConstants.TERMUX_ENV_TEMP_FILE_PATH, TermuxConstants.TERMUX_ENV_FILE_PATH);
-
 
 
     /*
@@ -904,9 +939,11 @@ public final class TermuxConstants {
 
 
 
-
-
-
+	// 放在最后，以免TERMUX_ENV_TEMP_FILE_PATH等未初始化
+    /** Termux app $PREFIX directory path ignored sub file paths to consider it empty */
+    public static final List<String> TERMUX_PREFIX_DIR_IGNORED_SUB_FILES_PATHS_TO_CONSIDER_AS_EMPTY = Arrays.asList(
+        TermuxConstants.TERMUX_TMP_PREFIX_DIR_PATH, TermuxConstants.TERMUX_ENV_TEMP_FILE_PATH, TermuxConstants.TERMUX_ENV_FILE_PATH);
+	
     /**
      * Termux app constants.
      */
@@ -942,11 +979,11 @@ public final class TermuxConstants {
 
 
             /** Intent action to make termux app notify user that a crash happened. */
-            public static final String ACTION_NOTIFY_APP_CRASH = TermuxConstants.TERMUX_PACKAGE_NAME + ".app.notify_app_crash"; // Default: "com.termux.app.notify_app_crash"
+            public static final String ACTION_NOTIFY_APP_CRASH = TermuxConstants.TERMUX_PACKAGE_NAME_TERMUX + ".app.notify_app_crash"; // Default: "com.termux.app.notify_app_crash"
 
 
             /** Intent action to make termux reload its termux session styling */
-            public static final String ACTION_RELOAD_STYLE = TermuxConstants.TERMUX_PACKAGE_NAME + ".app.reload_style"; // Default: "com.termux.app.reload_style"
+            public static final String ACTION_RELOAD_STYLE = TermuxConstants.TERMUX_PACKAGE_NAME_TERMUX + ".app.reload_style"; // Default: "com.termux.app.reload_style"
             /** Intent {@code String} extra for what to reload for the TERMUX_ACTIVITY.ACTION_RELOAD_STYLE intent. This has been deperecated. */
             @Deprecated
             public static final String EXTRA_RELOAD_STYLE = TermuxConstants.TERMUX_PACKAGE_NAME + ".app.reload_style"; // Default: "com.termux.app.reload_style"
@@ -956,7 +993,7 @@ public final class TermuxConstants {
 
 
             /** Intent action to make termux request storage permissions */
-            public static final String ACTION_REQUEST_PERMISSIONS = TermuxConstants.TERMUX_PACKAGE_NAME + ".app.request_storage_permissions"; // Default: "com.termux.app.request_storage_permissions"
+            public static final String ACTION_REQUEST_PERMISSIONS = TermuxConstants.TERMUX_PACKAGE_NAME_TERMUX + ".app.request_storage_permissions"; // Default: "com.termux.app.request_storage_permissions"
         }
 
 
@@ -979,19 +1016,19 @@ public final class TermuxConstants {
         public static final class TERMUX_SERVICE {
 
             /** Intent action to stop TERMUX_SERVICE */
-            public static final String ACTION_STOP_SERVICE = TERMUX_PACKAGE_NAME + ".service_stop"; // Default: "com.termux.service_stop"
+            public static final String ACTION_STOP_SERVICE = TERMUX_PACKAGE_NAME_TERMUX + ".service_stop"; // Default: "com.termux.service_stop"
 
 
             /** Intent action to make TERMUX_SERVICE acquire a wakelock */
-            public static final String ACTION_WAKE_LOCK = TERMUX_PACKAGE_NAME + ".service_wake_lock"; // Default: "com.termux.service_wake_lock"
+            public static final String ACTION_WAKE_LOCK = TERMUX_PACKAGE_NAME_TERMUX + ".service_wake_lock"; // Default: "com.termux.service_wake_lock"
 
 
             /** Intent action to make TERMUX_SERVICE release wakelock */
-            public static final String ACTION_WAKE_UNLOCK = TERMUX_PACKAGE_NAME + ".service_wake_unlock"; // Default: "com.termux.service_wake_unlock"
+            public static final String ACTION_WAKE_UNLOCK = TERMUX_PACKAGE_NAME_TERMUX + ".service_wake_unlock"; // Default: "com.termux.service_wake_unlock"
 
 
             /** Intent action to execute command with TERMUX_SERVICE */
-            public static final String ACTION_SERVICE_EXECUTE = TERMUX_PACKAGE_NAME + ".service_execute"; // Default: "com.termux.service_execute"
+            public static final String ACTION_SERVICE_EXECUTE = TERMUX_PACKAGE_NAME_TERMUX + ".service_execute"; // Default: "com.termux.service_execute"
 
             /** Uri scheme for paths sent via intent to TERMUX_SERVICE */
             public static final String URI_SCHEME_SERVICE_EXECUTE = TERMUX_PACKAGE_NAME + ".file"; // Default: "com.termux.file"

@@ -2,22 +2,20 @@ package com.termux.shared.termux.shell;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.termux.shared.errors.Error;
-import com.termux.shared.file.filesystem.FileTypes;
-import com.termux.shared.termux.TermuxConstants;
 import com.termux.shared.file.FileUtils;
+import com.termux.shared.file.filesystem.FileTypes;
 import com.termux.shared.logger.Logger;
+import com.termux.shared.termux.TermuxConstants;
 import com.termux.shared.termux.settings.properties.TermuxAppSharedProperties;
-
-import org.apache.commons.io.filefilter.TrueFileFilter;
-
+import com.termux.shared.termux.shell.command.environment.TermuxShellEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public class TermuxShellUtils {
 
@@ -78,6 +76,19 @@ public class TermuxShellUtils {
         List<String> result = new ArrayList<>();
         if (interpreter != null) result.add(interpreter);
         result.add(executable);
+		
+		if ( TermuxShellEnvironment.ProotMod) {
+			String PACKAGE_NAME_PATH = TermuxShellEnvironment.PACKAGE_NAME_PATH;
+			//以proot方式启动
+			result.add(TermuxShellEnvironment.PROOT_PATH);
+
+			result.add("--rootfs=/");
+			result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/data/com.termux");
+			result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/user/0/com.termux");
+
+			result.add("--bind=" + PACKAGE_NAME_PATH + "/cache" + ":/linkerconfig");
+		}
+		
         if (arguments != null) Collections.addAll(result, arguments);
         return result.toArray(new String[0]);
     }
