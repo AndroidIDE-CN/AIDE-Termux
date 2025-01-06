@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import android.os.Looper;
 
 /**
  * A terminal session, consisting of a process coupled to a terminal interface.
@@ -68,7 +69,7 @@ public final class TerminalSession extends TerminalOutput {
     /** Set by the application for user identification of session, not by terminal. */
     public String mSessionName;
 
-    final Handler mMainThreadHandler = new MainThreadHandler();
+    final Handler mMainThreadHandler = new MainThreadHandler(Looper.getMainLooper());
 
     private final String mShellPath;
     private final String mCwd;
@@ -335,7 +336,11 @@ public final class TerminalSession extends TerminalOutput {
 
     @SuppressLint("HandlerLeak")
     class MainThreadHandler extends Handler {
-
+		
+		public MainThreadHandler(Looper looper) {
+			super(looper);
+		}
+		
         final byte[] mReceiveBuffer = new byte[4 * 1024];
 
         @Override

@@ -195,9 +195,16 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     private static final String LOG_TAG = "TermuxActivity";
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		
+		EventHandler.distribute(intent, this);
+	}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // 支持内嵌
+        // 内嵌兼容
 		TermuxApplication.init(this);
 		
 		Logger.logDebug(LOG_TAG, "onCreate");
@@ -286,6 +293,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     @Override
     public void onStart() {
         super.onStart();
+		
+		// 触发事件
+		onNewIntent(getIntent());
 
         Logger.logDebug(LOG_TAG, "onStart");
 
