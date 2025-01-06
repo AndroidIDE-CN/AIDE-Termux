@@ -20,7 +20,10 @@ import com.termux.shared.termux.theme.TermuxThemeUtils;
 public class TermuxApplication extends Application {
 
     private static final String LOG_TAG = "TermuxApplication";
-
+	
+	// AIDE-Termux默认 apt-android-7
+	public static String TERMUX_PACKAGE_VARIANT = "apt-android-7";
+	
     public void onCreate() {
         super.onCreate();
 
@@ -35,7 +38,7 @@ public class TermuxApplication extends Application {
         Logger.logDebug("Starting Application");
 
         // Set TermuxBootstrap.TERMUX_APP_PACKAGE_MANAGER and TermuxBootstrap.TERMUX_APP_PACKAGE_VARIANT
-        TermuxBootstrap.setTermuxPackageManagerAndVariant(BuildConfig.TERMUX_PACKAGE_VARIANT);
+        TermuxBootstrap.setTermuxPackageManagerAndVariant(TermuxApplication.TERMUX_PACKAGE_VARIANT);
 
         // Init app wide SharedProperties loaded from termux.properties
         TermuxAppSharedProperties properties = TermuxAppSharedProperties.init(context);
