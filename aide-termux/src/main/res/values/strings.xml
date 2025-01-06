@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Put flavor specific strings here -->
+	<string name="application_name">AIDE-Termux</string>
+
+</resources>
