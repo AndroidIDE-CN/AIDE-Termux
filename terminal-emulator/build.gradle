@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion 21
+	buildToolsVersion "21.1.0"
+
+	defaultConfig {
+		applicationId "com.termux.emulator"
+		minSdkVersion 21
+		targetSdkVersion 28
+		// namespace "com.termux.emulator"
+		// minSdk 21
+		// targetSdk 28
+
+		versionCode 1020
+		versionName "0.119.0-beta.1"
+	}
+}
+
+dependencies {
+	// 仅编译
+	compileOnly fileTree(dir: 'provider', include: ['.jar'])
+	
+	implementation "androidx.annotation:annotation:1.3.0"
+}
