@@ -197,7 +197,10 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Logger.logDebug(LOG_TAG, "onCreate");
+        // 支持内嵌
+		TermuxApplication.init(this);
+		
+		Logger.logDebug(LOG_TAG, "onCreate");
         mIsOnResumeAfterOnCreate = true;
 
         if (savedInstanceState != null)
