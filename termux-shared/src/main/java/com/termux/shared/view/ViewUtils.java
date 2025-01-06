@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.termux.shared.logger.Logger;
+import androidx.core.view.WindowCompat;
 
 public class ViewUtils {
 
@@ -172,6 +173,7 @@ public class ViewUtils {
         return (size.x < size.y) ? Configuration.ORIENTATION_PORTRAIT : Configuration.ORIENTATION_LANDSCAPE;
     }
 
+
     /**
      * Get device display size.
      *
@@ -182,17 +184,52 @@ public class ViewUtils {
      *                     and can be smaller than physical display size in multi-window mode.
      * @return Returns the display size as {@link Point}.
      */
-    public static Point getDisplaySize( @NonNull Context context, boolean activitySize) {
-        // android.view.WindowManager.getDefaultDisplay() and Display.getSize() are deprecated in
-        // API 30 and give wrong values in API 30 for activitySize=false in multi-window
-        androidx.window.WindowManager windowManager = new androidx.window.WindowManager(context);
-        androidx.window.WindowMetrics windowMetrics;
-        if (activitySize)
-            windowMetrics = windowManager.getCurrentWindowMetrics();
-        else
-            windowMetrics = windowManager.getMaximumWindowMetrics();
-        return new Point(windowMetrics.getBounds().width(), windowMetrics.getBounds().height());
-    }
+//    public static Point getDisplaySize( @NonNull Context context, boolean activitySize) {
+//        // android.view.WindowManager.getDefaultDisplay() and Display.getSize() are deprecated in
+//        // API 30 and give wrong values in API 30 for activitySize=false in multi-window
+//        androidx.window.WindowManager windowManager = new androidx.window.WindowManager(context);
+//        androidx.window.WindowMetrics windowMetrics;
+//        if (activitySize)
+//            windowMetrics = windowManager.getCurrentWindowMetrics();
+//        else
+//            windowMetrics = windowManager.getMaximumWindowMetrics();
+//        return new Point(windowMetrics.getBounds().width(), windowMetrics.getBounds().height());
+//    }
+	 
+	/**
+	 * Get device display size.
+	 *
+	 * @param context The {@link Context} to check with. It must be an {@link Activity} context,
+	 *                otherwise it may not provide the correct display information.
+	 * @param activitySize If set to {@code true}, the size returned will be that of the activity's
+	 *                     window and can be smaller than the physical display size in multi-window mode.
+	 *                     If set to {@code false}, it will attempt to get the size of the entire display.
+	 * @return Returns the display size as a {@link Point}.
+	 */
+	public static Point getDisplaySize(@NonNull Context context, boolean activitySize) {
+		if (!(context instanceof Activity)) {
+			throw new IllegalArgumentException("Context must be an instance of Activity");
+		}
+
+		Activity activity = (Activity) context;
+		androidx.window.layout.WindowMetricsCalculator windowMetricsCalculator = androidx.window.layout.WindowMetricsCalculator.getOrCreate();
+		androidx.window.layout.WindowMetrics windowMetrics;
+
+		if (activitySize) {
+			// Get the metrics for the current window (activity's window)
+			windowMetrics = windowMetricsCalculator.computeCurrentWindowMetrics(activity);
+		} else {
+			// Get the metrics for the entire display
+			windowMetrics = windowMetricsCalculator.computeMaximumWindowMetrics(activity);
+		}
+
+		Point size = new Point();
+		size.x = windowMetrics.getBounds().width();
+		size.y = windowMetrics.getBounds().height();
+
+		return size;
+	}
+	
 
     /** Convert {@link Rect} to {@link String}. */
     public static String toRectString(Rect rect) {
