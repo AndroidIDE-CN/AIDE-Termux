@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.termux"
+    package="${applicationId}"
     android:installLocation="internalOnly"
-    android:sharedUserId="${applicationId}"
     android:sharedUserLabel="@string/shared_user_label">
 
     <uses-feature
@@ -38,7 +37,8 @@
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
-    <application
+    <application>
+		<!-- 兼容内嵌
         android:name="com.termux.app.TermuxApplication"
         android:allowBackup="false"
         android:banner="@drawable/banner"
@@ -50,6 +50,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.TermuxApp.DayNight.DarkActionBar"
         tools:targetApi="m">
+		 -->
 
         <activity
             android:name="com.termux.app.TermuxActivity"
@@ -62,8 +63,8 @@
             tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+				<!-- 内嵌兼容，取消桌面活动 -->
+                <category android:name="android.intent.category.LAUNCHER_2" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,7 +80,7 @@
         <activity-alias
             android:name="com.termux.HomeActivity"
             android:exported="true"
-            android:targetActivity=".app.TermuxActivity">
+            android:targetActivity="com.termux.app.TermuxActivity">
 
             <!-- Launch activity automatically on boot on Android Things devices -->
             <intent-filter>
@@ -122,7 +123,7 @@
         <activity-alias
             android:name="com.termux.app.api.file.FileShareReceiverActivity"
             android:exported="true"
-            android:targetActivity=".app.api.file.FileReceiverActivity">
+            android:targetActivity="com.termux.app.api.file.FileReceiverActivity">
 
             <!-- Accept multiple file types when sending. -->
             <intent-filter>
@@ -143,7 +144,7 @@
         <activity-alias
             android:name="com.termux.app.api.file.FileViewReceiverActivity"
             android:exported="true"
-            android:targetActivity=".app.api.file.FileReceiverActivity">
+            android:targetActivity="com.termux.app.api.file.FileReceiverActivity">
 
             <!-- Accept multiple file types to let Termux be usable as generic file viewer. -->
             <intent-filter tools:ignore="AppLinkUrlError">
