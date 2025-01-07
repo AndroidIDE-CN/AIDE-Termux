@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.termux.shared.R;
 import com.termux.shared.data.DataUtils;
-import io.github.zeroaicy.util.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
