@@ -945,7 +945,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_RELOAD_STYLE);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_REQUEST_PERMISSIONS);
 
-        registerReceiver(mTermuxActivityBroadcastReceiver, intentFilter);
+        registerReceiver(mTermuxActivityBroadcastReceiver, intentFilter, Context.RECEIVER_EXPORTED);
     }
 
     private void unregisterTermuxActivityBroadcastReceiver() {

@@ -81,7 +81,7 @@ public class SystemEventReceiver extends BroadcastReceiver {
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addDataScheme("package");
-        context.registerReceiver(getInstance(), intentFilter);
+        context.registerReceiver(getInstance(), intentFilter, Context.RECEIVER_EXPORTED);
     }
 
     public synchronized static void unregisterPackageUpdateEvents(@NonNull Context context) {
