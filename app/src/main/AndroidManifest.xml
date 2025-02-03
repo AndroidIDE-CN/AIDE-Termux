@@ -19,6 +19,20 @@
         android:label="@string/permission_run_command_label"
         android:protectionLevel="dangerous" />
 
+	<!--
+	See https://blog.oversecured.com/Common-mistakes-when-using-permissions-in-Android/
+	regarding securing permissions.
+    -->
+    <permission
+        android:name="com.termux.permission.TERMUX_INTERNAL"
+        android:label="@string/permission_termux_internal_label"
+        android:description="@string/permission_termux_internal_description"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="signature" />
+	
+	<!--  -->
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+	
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -198,8 +212,23 @@
 
         <service
             android:name="com.termux.app.TermuxService"
-            android:exported="false" />
-
+			android:foregroundServiceType="specialUse"
+            android:exported="true"
+            android:permission="com.termux.permission.TERMUX_INTERNAL">
+            <!--
+			About android:foregroundServiceType: Starting with Android 14 foreground
+			services must define a service type. See:
+			https://developer.android.com/guide/components/fg-service-types
+			Termux uses the "Special Use" type:
+			https://developer.android.com/guide/components/fg-service-types#special-use
+            -->
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="As a Linux environment Termux needs to ensure that running tasks are not killed or paused while the app is in the background.
+                For example, a user might start a web server that serves HTML pages and then interact with that from the browser app while the Termux
+                app is in the background. If the system were to interrupt or defer the Termux app while it is in the background the user
+                experience would be negatively affected since the above described use case would be broken." />
+        </service>
+		
         <service
             android:name="com.termux.app.RunCommandService"
             android:exported="true"
