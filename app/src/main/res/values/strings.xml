@@ -12,7 +12,10 @@
     ]>
 
 <resources>
-
+	
+	<string name="permission_termux_internal_label">Termux Internal</string>
+    <string name="permission_termux_internal_description">Access internal Termux functionality.</string>
+	
     <string name="application_name">&TERMUX_APP_NAME;</string>
     <string name="shared_user_label">&TERMUX_APP_NAME; user</string>
 
