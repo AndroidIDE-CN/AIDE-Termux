@@ -15,7 +15,24 @@ android {
 		versionCode 1020
 		versionName "0.119.0-beta.1"
 	}
+
 	
+	signingConfigs{
+		// release自行配置
+		release{
+			keyAlias "AIDE+"
+			keyPassword "123789456"
+			storePassword "123789456"
+			storeFile file("app-release.jks")
+		}
+		debug{
+			keyAlias "androiddebug"
+			keyPassword "123789456"
+			storePassword "123789456"
+			storeFile file("app-debug.jks")
+		}
+		
+	}
 	
 	buildFeatures{
 		// true则启用 viewBinding
@@ -23,13 +40,29 @@ android {
 		// 使用Androidx，暂时先这样
 		useAndroidx true
 	}
+	
+	buildTypes {
+		// 仅支持release配置，仅当值为true时启用
+		release {
+			// 资源混淆
+			shrinkResources false
+			// 代码混淆[增量构建失效]
+			minifyEnabled !true
+			// 代码混淆配置文件
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+	
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_8
 		targetCompatibility JavaVersion.VERSION_8
 	}
+	
 }
 
 dependencies {
-	api project(':app')
 	compile fileTree(dir: 'libs', include: ['*.jar'])
+	api project(':app')
+	// kotlin库如果类冲突，取消下一行注释
+	// api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0"
 }
