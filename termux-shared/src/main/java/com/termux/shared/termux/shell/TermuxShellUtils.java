@@ -83,7 +83,8 @@ public class TermuxShellUtils {
 
 			result.add("--rootfs=/");
 			result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/data/com.termux");
-			result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/user/0/com.termux");
+			
+			// result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/user/0/com.termux");
 
 			result.add("--bind=" + PACKAGE_NAME_PATH + "/cache" + ":/linkerconfig");
 		}
