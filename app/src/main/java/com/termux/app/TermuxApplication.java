@@ -16,6 +16,7 @@ import com.termux.shared.termux.shell.command.environment.TermuxShellEnvironment
 import com.termux.shared.termux.shell.am.TermuxAmSocketServer;
 import com.termux.shared.termux.shell.TermuxShellManager;
 import com.termux.shared.termux.theme.TermuxThemeUtils;
+import com.termux.shared.termux.ContextUtils;
 
 public class TermuxApplication extends Application {
 
@@ -40,7 +41,8 @@ public class TermuxApplication extends Application {
 		inited = true;
 		
 		Context applicationContext = context.getApplicationContext();
-
+		ContextUtils.setApplicationContext(applicationContext);
+		
 		// Set crash handler for the app
 		TermuxCrashUtils.setDefaultCrashHandler(applicationContext);
 

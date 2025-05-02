@@ -20,10 +20,10 @@ public class EventHandler {
 	private static final String work_dir_extra = "work_dir_extra";
 	
 	// 退格 用于清空最新编辑行
-	private static final byte[] backspaceKeyEventBytes = new byte[0x50];
+	// private static final byte[] backspaceKeyEventBytes = new byte[0x50];
 	
 	static{
-		Arrays.fill(backspaceKeyEventBytes, (byte)0x8);
+		// Arrays.fill(backspaceKeyEventBytes, (byte)0x8);
 	}
 	
 	
@@ -75,7 +75,8 @@ public class EventHandler {
 					return;
 				
 				// 清空 已有内容 0x100个字符
-				currentSession.write(backspaceKeyEventBytes, 0, backspaceKeyEventBytes.length);
+				// currentSession.write(backspaceKeyEventBytes, 0, backspaceKeyEventBytes.length);
+				currentSession.write("\u0005\u0015");
 				
 				if( !work_dir_text.equals(currentSession.getCwd())){
 					//更改工作目录，防止有空格使用""包裹
@@ -103,6 +104,10 @@ public class EventHandler {
 				currentSession.write("$GRADLE " + gradle_cmd_line_text.concat("\n"));
 			}
 		}, 200);
+	}
+	
+	private static void handlerGradleCmdLine2(TermuxActivity termuxActivity, final Intent intent) {
+		termuxActivity.mTermuxService.createTermuxSession(null);
 	}
 }
 

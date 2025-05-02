@@ -5,12 +5,12 @@ android {
 	buildToolsVersion "21.1.0"
 
 	defaultConfig {
-		applicationId "com.termux.shared"
-		minSdkVersion 21
-		targetSdkVersion 28
-		// namespace "com.termux.shared"
-		// minSdk 21
-		// targetSdk 28
+		// applicationId "com.termux.shared"
+		// minSdkVersion 21
+		// targetSdkVersion 28
+		namespace "com.termux.shared"
+		minSdk 21
+		targetSdk 28
 
 		versionCode 1020
 		versionName "0.119.0-beta.1"

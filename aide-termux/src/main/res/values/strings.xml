@@ -3,5 +3,7 @@
 
     <!-- Put flavor specific strings here -->
 	<string name="application_name">AIDE-Termux</string>
+	<string name="permission_run_command_label">在AIDE Termux环境中运行命令</string>
+    <string name="permission_run_command_description">在AIDE Termux中执行任意命令环境和访问文件</string>
 
 </resources>

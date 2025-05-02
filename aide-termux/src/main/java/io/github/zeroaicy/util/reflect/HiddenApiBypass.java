@@ -39,6 +39,9 @@ public class HiddenApiBypass {
 		if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.P ) {
 			return true;
 		}
+		if ( Build.VERSION.SDK_INT > Build.VERSION_CODES.R ) {
+			return false;
+		}
 		
 		try {
 			Method forName = Class.class.getDeclaredMethod("forName", String.class);

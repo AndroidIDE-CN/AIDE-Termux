@@ -87,6 +87,8 @@ public class TermuxShellUtils {
 			// result.add("--bind=" + PACKAGE_NAME_PATH + ":/data/user/0/com.termux");
 
 			result.add("--bind=" + PACKAGE_NAME_PATH + "/cache" + ":/linkerconfig");
+			// result.add("--bind=" + PACKAGE_NAME_PATH + "/cache/proc" + ":/proc");
+			
 		}
 		
 		result.add(executable);

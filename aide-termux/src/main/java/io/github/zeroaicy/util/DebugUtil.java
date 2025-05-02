@@ -13,7 +13,7 @@ public class DebugUtil{
 		debug(context, true);
 	}
 	public static void debug(Context context, boolean isChangerLog){
-		Log.SetSystemOut(true);
+		Log.setSystemOut(true);
 		
 		if( isChangerLog){
 			FileUtil.init();

@@ -347,8 +347,10 @@ public final class TermuxConstants {
 	public static final String TERMUX_PACKAGE_NAME_TERMUX = "com.termux";
 	public static final String TERMUX_PACKAGE_NAME = getPackageName();
 
+	// 安卓用户兼容
 	private static final String TERMUX_DATA_PREFIX = getTermuxDataPrefix();
 
+	// 计算数据目录1前缀
 	private static String getTermuxDataPrefix() {
 
 		Context applicationContext = ContextUtils.getApplicationContext();
@@ -411,7 +413,7 @@ public final class TermuxConstants {
 	/** Termux:API app name */
 	public static final String TERMUX_API_APP_NAME = "Termux:API"; // Default: "Termux:API"
 	/** Termux:API app package name */
-	public static final String TERMUX_API_PACKAGE_NAME = TERMUX_PACKAGE_NAME + ".api"; // Default: "com.termux.api"
+	public static final String TERMUX_API_PACKAGE_NAME = TERMUX_PACKAGE_NAME_TERMUX + ".api"; // Default: "com.termux.api"
 	/** Termux:API GitHub repo name */
 	public static final String TERMUX_API_GITHUB_REPO_NAME = "termux-api"; // Default: "termux-api"
 	/** Termux:API GitHub repo url */
@@ -945,7 +947,7 @@ public final class TermuxConstants {
 		public static final class TERMUX_ACTIVITY {
 
 			/** Intent extra for if termux failsafe session needs to be started and is used by {@link TERMUX_ACTIVITY} and {@link TERMUX_SERVICE#ACTION_STOP_SERVICE} */
-			public static final String EXTRA_FAILSAFE_SESSION = TermuxConstants.TERMUX_PACKAGE_NAME
+			public static final String EXTRA_FAILSAFE_SESSION = TermuxConstants.TERMUX_PACKAGE_NAME_TERMUX
 					+ ".app.failsafe_session"; // Default: "com.termux.app.failsafe_session"
 
 			/** Intent action to make termux app notify user that a crash happened. */
@@ -969,11 +971,11 @@ public final class TermuxConstants {
 		}
 
 		/** Termux app settings activity name. */
-		public static final String TERMUX_SETTINGS_ACTIVITY_NAME = TERMUX_PACKAGE_NAME
+		public static final String TERMUX_SETTINGS_ACTIVITY_NAME = TERMUX_PACKAGE_NAME_TERMUX
 				+ ".app.activities.SettingsActivity"; // Default: "com.termux.app.activities.SettingsActivity"
 
 		/** Termux app core service name. */
-		public static final String TERMUX_SERVICE_NAME = TERMUX_PACKAGE_NAME + ".app.TermuxService"; // Default: "com.termux.app.TermuxService"
+		public static final String TERMUX_SERVICE_NAME = TERMUX_PACKAGE_NAME_TERMUX + ".app.TermuxService"; // Default: "com.termux.app.TermuxService"
 
 		/**
 		 * Termux app core service.
@@ -1122,10 +1124,10 @@ public final class TermuxConstants {
 			public static final String RUN_COMMAND_API_HELP_URL = TERMUX_GITHUB_WIKI_REPO_URL + "/RUN_COMMAND-Intent"; // Default: "https://github.com/termux/termux-app/wiki/RUN_COMMAND-Intent"
 
 			/** Intent action to execute command with RUN_COMMAND_SERVICE */
-			public static final String ACTION_RUN_COMMAND = TERMUX_PACKAGE_NAME + ".RUN_COMMAND"; // Default: "com.termux.RUN_COMMAND"
+			public static final String ACTION_RUN_COMMAND = TERMUX_PACKAGE_NAME_TERMUX + ".RUN_COMMAND"; // Default: "com.termux.RUN_COMMAND"
 
 			/** Intent {@code String} extra for absolute path of command for the RUN_COMMAND_SERVICE.ACTION_RUN_COMMAND intent */
-			public static final String EXTRA_COMMAND_PATH = TERMUX_PACKAGE_NAME + ".RUN_COMMAND_PATH"; // Default: "com.termux.RUN_COMMAND_PATH"
+			public static final String EXTRA_COMMAND_PATH = TERMUX_PACKAGE_NAME_TERMUX + ".RUN_COMMAND_PATH"; // Default: "com.termux.RUN_COMMAND_PATH"
 			/** Intent {@code String[]} extra for arguments to the executable of the command for the RUN_COMMAND_SERVICE.ACTION_RUN_COMMAND intent */
 			public static final String EXTRA_ARGUMENTS = TERMUX_PACKAGE_NAME + ".RUN_COMMAND_ARGUMENTS"; // Default: "com.termux.RUN_COMMAND_ARGUMENTS"
 			/** Intent {@code boolean} extra for whether to replace comma alternative characters in arguments with comma characters for the RUN_COMMAND_SERVICE.ACTION_RUN_COMMAND intent */

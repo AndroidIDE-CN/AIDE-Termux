@@ -26,16 +26,16 @@ public class ContextUtils {
 	
 	public static final String TAG = "ContextUtils";
 	
-	static Context applicationContext;
+	private static volatile Context applicationContext;
 
-	public static void setApplicationContext(Context applicationContext) {
+	public static synchronized void setApplicationContext(Context applicationContext) {
 		ContextUtils.applicationContext = applicationContext;
 	}
 
 	public static Context getApplicationContext() {
 
 		if (ContextUtils.applicationContext == null) {
-			ContextUtils.applicationContext = getApplication();
+			setApplicationContext(getApplication());
 		}
 		return ContextUtils.applicationContext;
 	}
@@ -209,6 +209,7 @@ public class ContextUtils {
 
 			return false;
 		}
+		
 		public static boolean setHiddenApiExemptions( String... signaturePrefixes ) {
 			
 			//Log.d(TAG, "setHiddenApiExemptions被调用路径", new Throwable());
