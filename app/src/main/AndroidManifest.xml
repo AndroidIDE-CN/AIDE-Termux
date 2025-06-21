@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="${applicationId}"
+
     android:installLocation="internalOnly"
     android:sharedUserLabel="@string/shared_user_label">
 
@@ -13,15 +13,15 @@
         android:required="false" />
 
     <permission
-        android:name="com.termux.permission.RUN_COMMAND"
+        android:name="${applicationId}.permission.RUN_COMMAND"
         android:description="@string/permission_run_command_description"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/permission_run_command_label"
         android:protectionLevel="dangerous" />
 
-	<!--
-	See https://blog.oversecured.com/Common-mistakes-when-using-permissions-in-Android/
-	regarding securing permissions.
+    <!--
+    See https://blog.oversecured.com/Common-mistakes-when-using-permissions-in-Android/
+    regarding securing permissions.
     -->
     <permission
         android:name="com.termux.permission.TERMUX_INTERNAL"
@@ -29,10 +29,10 @@
         android:description="@string/permission_termux_internal_description"
         android:icon="@mipmap/ic_launcher"
         android:protectionLevel="signature" />
-	
-	<!--  -->
-	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-	
+
+    <!--  -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -52,7 +52,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application>
-		<!-- 兼容内嵌
+        <!-- 兼容内嵌
         android:name="com.termux.app.TermuxApplication"
         android:allowBackup="false"
         android:banner="@drawable/banner"
@@ -64,7 +64,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.TermuxApp.DayNight.DarkActionBar"
         tools:targetApi="m">
-		 -->
+         -->
 
         <activity
             android:name="com.termux.app.TermuxActivity"
@@ -77,7 +77,7 @@
             tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-				<!-- 内嵌兼容，取消桌面活动 -->
+                <!-- 内嵌兼容，取消桌面活动 -->
                 <category android:name="android.intent.category.LAUNCHER_2" />
             </intent-filter>
             <intent-filter>
@@ -212,7 +212,7 @@
 
         <service
             android:name="com.termux.app.TermuxService"
-			android:foregroundServiceType="specialUse"
+            android:foregroundServiceType="specialUse"
             android:exported="true"
             android:permission="com.termux.permission.TERMUX_INTERNAL">
             <!--
@@ -228,13 +228,13 @@
                 app is in the background. If the system were to interrupt or defer the Termux app while it is in the background the user
                 experience would be negatively affected since the above described use case would be broken." />
         </service>
-		
+
         <service
             android:name="com.termux.app.RunCommandService"
             android:exported="true"
-            android:permission="com.termux.permission.RUN_COMMAND">
+            android:permission="${applicationId}.permission.RUN_COMMAND">
             <intent-filter>
-                <action android:name="com.termux.RUN_COMMAND" />
+                <action android:name="${applicationId}.RUN_COMMAND" />
             </intent-filter>
         </service>
 
