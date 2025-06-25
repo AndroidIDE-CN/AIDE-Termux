@@ -213,7 +213,7 @@
             android:name="com.termux.app.TermuxService"
             android:foregroundServiceType="specialUse"
             android:exported="true"
-            android:permission="com.termux.permission.TERMUX_INTERNAL">
+            android:permission="${applicationId}.permission.TERMUX_INTERNAL">
             <!--
 			About android:foregroundServiceType: Starting with Android 14 foreground
 			services must define a service type. See:
